@@ -5,7 +5,8 @@ import java.util.stream.Stream;
 
 import jp.typesafe.FuncIF.IKeyExtractor;
 
-public class DistinctedList<T,R extends Comparable<? super R>> extends SortedList<T,R> {
+public class DistinctedList<T,R extends Comparable<? super R>>
+        extends SortedList<T,R> {
 
 
     DistinctedList(

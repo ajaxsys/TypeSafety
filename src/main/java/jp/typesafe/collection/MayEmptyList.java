@@ -1,5 +1,6 @@
 package jp.typesafe.collection;
 
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Stream;
@@ -9,17 +10,19 @@ import jp.typesafe.FuncIF.IEmpty;
 import jp.typesafe.FuncIF.INotEmpty;
 import jp.typesafe.java.util.Lists;
 
-public class MayEmptyList<T> {
-    private List<T> unmodifiableList;
+public class MayEmptyList<E>
+        extends BaseTypeSafeList<E> {
 
-    private MayEmptyList(List<T> list) {
+    private List<E> unmodifiableList;
+
+    private MayEmptyList(List<E> list) {
         this.unmodifiableList = Collections.unmodifiableList(list);
     }
 
     public
     <R> R
     ifPresent(
-        INotEmpty<T, R> notEmpty,
+        INotEmpty<E, R> notEmpty,
         IEmpty<R> empty) {
 
         return
@@ -37,6 +40,15 @@ public class MayEmptyList<T> {
 
         return new MayEmptyList<>(
             copyFrom);
+    }
+
+    @SafeVarargs
+    public static <T>
+    MayEmptyList<T>
+    of(T... ts) {
+
+        return new MayEmptyList<>(
+                Arrays.asList(ts));
     }
 
     public static <C extends Comparable<? super C>, T>
@@ -57,7 +69,17 @@ public class MayEmptyList<T> {
             copyFrom);
     }
 
-    public Stream<T> stream() {
+    public Stream<E> stream() {
         return unmodifiableList.stream();
+    }
+
+    @Override
+    List<E> getRawList() {
+        return unmodifiableList;
+    }
+
+    @Override
+    public String toString() {
+        return Arrays.toString(unmodifiableList.toArray());
     }
 }
