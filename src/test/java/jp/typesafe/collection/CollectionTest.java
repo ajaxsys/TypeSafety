@@ -23,8 +23,16 @@ public class CollectionTest {
 
         testData.ifPresent(
                 this::doSortThenDistinct,
-                ()->
+                () ->
                         "NG");
+    }
+
+    @Test
+    public void testFromNotEmpty() {
+
+        NotEmptyList<Integer> testData = NotEmptyList.of(1, 3, 2, 3);
+
+        doSortThenDistinct(testData);
     }
 
     @SafeVarargs

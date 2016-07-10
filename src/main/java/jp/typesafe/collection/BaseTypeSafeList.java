@@ -23,7 +23,7 @@ abstract class BaseTypeSafeList<E> {
         final E[] arr = (E[]) Array.newInstance(e.getClass(), length);
         arr[0] = e;
         if (length > 1) {
-            System.arraycopy(es, 0, arr, 1, arr.length);
+            System.arraycopy(es, 0, arr, 1, es.length);
         }
         return arr;
     }
